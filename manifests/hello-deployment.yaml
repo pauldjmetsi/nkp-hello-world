@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+  labels:
+    app: hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+          name: http
+        volumeMounts:
+        - name: html-content
+          mountPath: /usr/share/nginx/html/hello
+          readOnly: true
+      volumes:
+      - name: html-content
+        configMap:
+          name: index-page
+          items:
+          - key: index.html
+            path: index.html

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index-page
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hello World</title>
+    </head>
+    <body style="margin: 0; padding: 0; height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(to bottom, #2d3748, #1a202c); font-family: Arial, sans-serif;">
+        <div style="text-align: center; padding: 40px; background-color: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+            <h1 style="margin: 0; color: #333; font-size: 3em;">☸️ Hello NKP World!</h1>
+        </div>
+    </body>
+    </html>

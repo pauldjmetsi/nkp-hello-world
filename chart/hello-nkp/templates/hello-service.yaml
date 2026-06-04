@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hello-nkp.fullname" . }}-hello
+  labels:
+    app: hello
+  {{- include "hello-nkp.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.hello.type }}
+  selector:
+    app: hello
+    {{- include "hello-nkp.selectorLabels" . | nindent 4 }}
+  ports:
+  {{- .Values.hello.ports | toYaml | nindent 2 }}

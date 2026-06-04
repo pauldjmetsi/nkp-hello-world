@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hello-nkp.fullname" . }}-hello
+  labels:
+    app: hello
+  {{- include "hello-nkp.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.hello.replicas }}
+  selector:
+    matchLabels:
+      app: hello
+    {{- include "hello-nkp.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: hello
+      {{- include "hello-nkp.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        image: {{ .Values.hello.nginx.image.repository }}:{{ .Values.hello.nginx.image.tag
+          | default .Chart.AppVersion }}
+        name: nginx
+        ports:
+        - containerPort: 80
+          name: http
+        resources: {}
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html/hello
+          name: html-content
+          readOnly: true
+      nodeSelector: {{- toYaml .Values.hello.nodeSelector | nindent 8 }}
+      serviceAccountName: {{ include "hello-nkp.serviceAccountName" . }}
+      tolerations: {{- toYaml .Values.hello.tolerations | nindent 8 }}
+      topologySpreadConstraints: {{- toYaml .Values.hello.topologySpreadConstraints | nindent
+        8 }}
+      volumes:
+      - configMap:
+          items:
+          - key: index.html
+            path: index.html
+          name: {{ include "hello-nkp.fullname" . }}-index-page
+        name: html-content

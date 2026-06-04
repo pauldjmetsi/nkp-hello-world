@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "hello-nkp.fullname" . }}-index-page
+  labels:
+  {{- include "hello-nkp.labels" . | nindent 4 }}
+data:
+  index.html: {{ .Values.indexPage.indexHtml | toYaml | indent 1 }}
