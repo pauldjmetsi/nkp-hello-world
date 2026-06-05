@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-world-dashboard-info
+  labels:
+    kommander.d2iq.io/application: hello-world
+data:
+  dashboardLink: "/hello"
+  name: Hello World
+  version: 0.2.0
